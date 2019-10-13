@@ -1,5 +1,5 @@
 package me.tynahan.demoinflearnrestapi.events;
 
 public enum EventStatus {
-    RAFT, PUBLISHED, BEGAN_ENROLLMEND
+    DRAFT, PUBLISHED, BEGAN_ENROLLMEND
 }
