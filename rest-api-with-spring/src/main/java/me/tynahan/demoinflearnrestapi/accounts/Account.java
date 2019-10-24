@@ -14,7 +14,7 @@ public class Account {
     @Id @GeneratedValue
     private Integer id;
 
-    private String name;
+    private String email;
 
     private String password;
 
