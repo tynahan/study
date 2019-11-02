@@ -3,6 +3,7 @@ package me.tynahan.demoinflearnrestapi.configs;
 import me.tynahan.demoinflearnrestapi.accounts.Account;
 import me.tynahan.demoinflearnrestapi.accounts.AccountRole;
 import me.tynahan.demoinflearnrestapi.accounts.AccountService;
+import me.tynahan.demoinflearnrestapi.common.AppProperties;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -34,14 +35,24 @@ public class AppConfig {
             @Autowired
             AccountService accountService;
 
+            @Autowired
+            AppProperties appProperties;
+
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                Account tynahan = Account.builder()
-                        .email("tynahan@gmail.com")
-                        .password("dbgndbgn")
+                Account admin = Account.builder()
+                        .email(appProperties.getAdminUserName())
+                        .password(appProperties.getAdminPassword())
                         .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
                         .build();
-                accountService.saveAccount(tynahan);
+                accountService.saveAccount(admin);
+
+                Account user = Account.builder()
+                        .email(appProperties.getUserUserName())
+                        .password(appProperties.getUserPassword())
+                        .roles(Set.of(AccountRole.USER))
+                        .build();
+                accountService.saveAccount(user);
             }
         };
     }
