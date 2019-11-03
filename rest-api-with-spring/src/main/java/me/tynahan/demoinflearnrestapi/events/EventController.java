@@ -1,7 +1,6 @@
 package me.tynahan.demoinflearnrestapi.events;
 
 import me.tynahan.demoinflearnrestapi.accounts.Account;
-import me.tynahan.demoinflearnrestapi.accounts.AccountAdapter;
 import me.tynahan.demoinflearnrestapi.accounts.CurrentUser;
 import me.tynahan.demoinflearnrestapi.common.ErrorResource;
 import org.modelmapper.ModelMapper;
@@ -14,7 +13,6 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
