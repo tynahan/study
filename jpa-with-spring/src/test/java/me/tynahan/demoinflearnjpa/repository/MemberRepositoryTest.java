@@ -1,5 +1,6 @@
-package me.tynahan.demoinflearnjpa.domain;
+package me.tynahan.demoinflearnjpa.repository;
 
+import me.tynahan.demoinflearnjpa.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,10 +31,11 @@ public class MemberRepositoryTest {
         Long savedId = memberRepository.save(member);
 
         // then
-        Member findMember = memberRepository.find(savedId);
+        Member findMember = memberRepository.findOne(savedId);
         Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
         Assertions.assertThat(findMember.getName()).isEqualTo(member.getName());
         Assertions.assertThat(findMember).isEqualTo(member);
-
     }
+
+
 }
