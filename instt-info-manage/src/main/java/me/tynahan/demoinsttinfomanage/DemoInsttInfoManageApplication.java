@@ -1,0 +1,13 @@
+package me.tynahan.demoinsttinfomanage;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoInsttInfoManageApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoInsttInfoManageApplication.class, args);
+    }
+
+}
