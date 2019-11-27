@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+@ActiveProfiles("test")
 public class MemberServiceTest {
 
     @Autowired
@@ -24,10 +25,14 @@ public class MemberServiceTest {
     MemberRepository memberRepository;
 
     @Test
+    @Transactional
     public void testJoinMember() {
         // Given
+        String name = "newbie";
+        System.out.println("memberRepository.findByName(name).size() = " + memberRepository.findByName(name).size());
+
         Member member = new Member();
-        member.setName("newbie");
+        member.setName(name);
 
         // When
         Long savedId = memberService.join(member);
@@ -37,6 +42,7 @@ public class MemberServiceTest {
     }
 
     @Test(expected = IllegalStateException.class)
+    @Transactional
     public void testDuplicateJoinException() {
         // Given
         String newbie = "newbie";

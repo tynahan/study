@@ -25,6 +25,4 @@ public class Delivery {
 
     @Enumerated(STRING)
     private DeliveryStatus status;
-
-
 }

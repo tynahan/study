@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = false)
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
@@ -23,7 +23,7 @@ public class ItemService {
         return itemRepository.findOne(itemId);
     }
 
-    public List<Item> findAllItem() {
+    public List<Item> findAllItems() {
         return itemRepository.findAll();
     }
 }
