@@ -10,8 +10,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -24,7 +22,7 @@ public class OrderRepositoryTest {
     @Transactional
     public void testSaveOrder() {
         // Given
-        Order order = new Order();
+        Order order = null;
 
         // When
         orderRepository.save(order);
