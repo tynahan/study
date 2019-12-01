@@ -51,7 +51,7 @@ public class OrderService {
     }
 
     /**
-     * 주문 취소
+     * 주문 취
      * @param orderId
      */
     public void cancelOrder(Long orderId) {
