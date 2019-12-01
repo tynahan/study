@@ -15,7 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.not;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -57,7 +60,7 @@ public class OrderServiceTest {
         assertThat(findOrder.getMember()).isNotNull();
         assertThat(findOrder.getOrderItems()).isNotNull();
         assertThat(findOrder.getDelivery()).isNotNull();
-        assertThat(findOrder.getOrderItems().get(0).getId()).isNotNull();
+        assertThat(findOrder.getOrderItems()).filteredOn("id", not(null));
         assertThat(findOrder.getDelivery().getAddress()).isNotNull();
         assertThat(findOrder.getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
         assertThat(findOrder.getId()).isNotNull();
@@ -74,7 +77,6 @@ public class OrderServiceTest {
         assertThat(findOrder.getOrderItems().get(0).getItem().getStockQuantity())
                 .as("주문 수량만큼 재고가 줄어야 한다")
                 .isEqualTo(stockQuantity - count);
-
     }
 
 

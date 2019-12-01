@@ -1,6 +1,10 @@
 package me.tynahan.demoinflearnjpa.repository;
 
+import me.tynahan.demoinflearnjpa.domain.Delivery;
+import me.tynahan.demoinflearnjpa.domain.Member;
 import me.tynahan.demoinflearnjpa.domain.Order;
+import me.tynahan.demoinflearnjpa.domain.OrderItem;
+import me.tynahan.demoinflearnjpa.domain.item.Album;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +26,8 @@ public class OrderRepositoryTest {
     @Transactional
     public void testSaveOrder() {
         // Given
-        Order order = null;
+        Order order;
+        order = Order.createOrder(new Member(), new Delivery(), OrderItem.createOrderItem(new Album(), 0, 0));
 
         // When
         orderRepository.save(order);
