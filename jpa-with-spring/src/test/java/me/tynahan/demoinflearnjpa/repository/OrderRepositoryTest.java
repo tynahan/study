@@ -1,9 +1,6 @@
 package me.tynahan.demoinflearnjpa.repository;
 
-import me.tynahan.demoinflearnjpa.domain.Delivery;
-import me.tynahan.demoinflearnjpa.domain.Member;
-import me.tynahan.demoinflearnjpa.domain.Order;
-import me.tynahan.demoinflearnjpa.domain.OrderItem;
+import me.tynahan.demoinflearnjpa.domain.*;
 import me.tynahan.demoinflearnjpa.domain.item.Album;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -13,6 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,6 +35,20 @@ public class OrderRepositoryTest {
         Order findOrder = orderRepository.findOne(order.getId());
 
         // Then
-        Assertions.assertThat(findOrder).isEqualTo(order);
+        assertThat(findOrder).isEqualTo(order);
     }
+
+    @Test
+    public void testFindOrderByCond() {
+        // Given
+        //?
+        OrderSearch orderSearch = new OrderSearch();
+        orderSearch.setMemberName("");
+
+        // When
+        List<Order> orders = orderRepository.findOrderByCond(orderSearch);
+
+        // Then
+    }
+
 }
