@@ -2,14 +2,12 @@ package me.tynahan.demoinflearnjpa.repository;
 
 import me.tynahan.demoinflearnjpa.domain.*;
 import me.tynahan.demoinflearnjpa.domain.item.Album;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,21 +20,6 @@ public class OrderRepositoryTest {
 
     @Autowired
     OrderRepository orderRepository;
-
-    @Test
-    @Transactional
-    public void testSaveOrder() {
-        // Given
-        Order order;
-        order = Order.createOrder(new Member(), new Delivery(), OrderItem.createOrderItem(new Album(), 0, 0));
-
-        // When
-        orderRepository.save(order);
-        Order findOrder = orderRepository.findOne(order.getId());
-
-        // Then
-        assertThat(findOrder).isEqualTo(order);
-    }
 
     @Test
     public void testFindOrderByCond() {

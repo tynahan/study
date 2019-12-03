@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
 @Transactional
+@ActiveProfiles("test")
 public class OrderServiceTest {
 
     @Autowired

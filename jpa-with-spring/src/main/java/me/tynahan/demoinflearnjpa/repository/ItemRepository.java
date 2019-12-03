@@ -3,6 +3,7 @@ package me.tynahan.demoinflearnjpa.repository;
 import lombok.RequiredArgsConstructor;
 import me.tynahan.demoinflearnjpa.domain.item.Item;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;

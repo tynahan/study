@@ -25,6 +25,7 @@ public class OrderService {
      * @param count
      * @return
      */
+    @Transactional
     public Long order(Long memberId, Long itemId, int count) {
         Member member = memberRepository.findOne(memberId);
         Item item = itemRepository.findOne(itemId);
@@ -51,7 +52,7 @@ public class OrderService {
     }
 
     /**
-     * 주문 취
+     * 주문 취소
      * @param orderId
      */
     public void cancelOrder(Long orderId) {

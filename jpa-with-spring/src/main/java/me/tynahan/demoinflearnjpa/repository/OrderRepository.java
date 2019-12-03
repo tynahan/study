@@ -5,6 +5,7 @@ import me.tynahan.demoinflearnjpa.domain.Member;
 import me.tynahan.demoinflearnjpa.domain.Order;
 import me.tynahan.demoinflearnjpa.domain.OrderSearch;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OrderRepository {
     private final EntityManager em;
 
+    @Transactional
     public void save(Order order) {
         em.persist(order);
     }
@@ -27,7 +29,6 @@ public class OrderRepository {
     }
 
     public List<Order> findOrderByCond(OrderSearch orderSearch) {
-
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
         Root<Order> o = cq.from(Order.class);

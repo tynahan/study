@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.fail;
 
@@ -21,28 +20,7 @@ public class MemberServiceTest {
     @Autowired
     MemberService memberService;
 
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Test
-    @Transactional
-    public void testJoinMember() {
-        // Given
-        String name = "newbie";
-        System.out.println("memberRepository.findByName(name).size() = " + memberRepository.findByName(name).size());
-
-        Member member = new Member();
-        member.setName(name);
-
-        // When
-        Long savedId = memberService.join(member);
-
-        // Then
-        Assertions.assertThat(member).isEqualTo(memberRepository.findOne(savedId));
-    }
-
     @Test(expected = IllegalStateException.class)
-    @Transactional
     public void testDuplicateJoinException() {
         // Given
         String newbie = "newbie";
