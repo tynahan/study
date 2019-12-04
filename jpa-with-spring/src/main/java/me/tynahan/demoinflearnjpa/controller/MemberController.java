@@ -7,8 +7,11 @@ import me.tynahan.demoinflearnjpa.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -24,8 +27,11 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(MemberForm memberForm) {
+    public String create(@Valid MemberForm memberForm, BindingResult result) {
 
+        if (result.hasErrors()) {
+            return "members/createMemberForm";
+        }
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
         Member member = new Member();
         member.setAddress(address);
