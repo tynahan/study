@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,7 +50,7 @@ public class MemberControllerTest {
         mockMvc.perform(post("/members/new")
                 .content(objectMapper.writeValueAsString(memberForm)))
                 .andDo(print())
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -63,6 +64,18 @@ public class MemberControllerTest {
         // When & Then
         mockMvc.perform(post("/members/new")
                 .content(objectMapper.writeValueAsString(memberForm)))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetMemberList() throws Exception {
+        // Given
+        mockMvc.perform(get("/members"))
+                .andDo(print())
+                .andExpect(status().isOk());
+        // When
+
+        // Then
     }
 }
