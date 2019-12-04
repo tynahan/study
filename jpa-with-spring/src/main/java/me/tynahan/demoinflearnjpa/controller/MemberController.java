@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.tynahan.demoinflearnjpa.domain.Address;
 import me.tynahan.demoinflearnjpa.domain.Member;
 import me.tynahan.demoinflearnjpa.service.MemberService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,11 @@ import javax.validation.Valid;
 public class MemberController {
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     private MemberService memberService;
+
 
     @GetMapping("/members/new")
     public String createForm(Model model) {
@@ -33,9 +38,8 @@ public class MemberController {
             return "members/createMemberForm";
         }
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
-        Member member = new Member();
+        Member member = modelMapper.map(memberForm, Member.class);
         member.setAddress(address);
-        member.setName(memberForm.getName());
 
         memberService.join(member);
 
