@@ -2,6 +2,8 @@ package me.tynahan.demoinflearnjpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.tynahan.demoinflearnjpa.domain.Member;
+import me.tynahan.demoinflearnjpa.domain.item.Book;
 import me.tynahan.demoinflearnjpa.service.ItemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +20,9 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -86,4 +91,32 @@ public class ItemControllerTest {
                 .andExpect(model().attributeExists("items"));
     }
 
+    @Test
+    public void testUpdateItemForm() throws Exception {
+        // Given
+        given(itemService.findOneItem(1L)).willReturn(new Book());
+
+        // When
+        when(modelMapper.map(any(), any())).thenReturn(new BookForm());
+
+        mockMvc.perform(get("/items/{id}/edit", 1))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("items/updateItemForm"))
+                .andExpect(model().attributeExists("form"));
+    }
+
+    @Test
+    public void testUpdateItem() throws Exception {
+        // Given
+
+
+        // When
+
+        mockMvc.perform(post("/items/{id}/edit", 1))
+                .andExpect(redirectedUrl("/items"))
+                .andDo(print());
+
+        // Then
+    }
 }

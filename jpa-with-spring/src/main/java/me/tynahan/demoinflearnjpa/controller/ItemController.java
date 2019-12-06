@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -41,11 +39,26 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping("items")
+    @GetMapping("/items")
     public String list(Model model) {
         List<Item> items = itemService.findAllItems();
         model.addAttribute("items", items);
         return "items/itemList";
+    }
+
+    @GetMapping("/items/{itemId}/edit")
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+        Book book = (Book) itemService.findOneItem(itemId);
+        BookForm bookForm = modelMapper.map(book, BookForm.class);
+        model.addAttribute("form", bookForm);
+        return "items/updateItemForm";
+    }
+
+    @PostMapping("/items/{itemId}/edit")
+    public String updateItem(@ModelAttribute("form") BookForm bookForm, @PathVariable String itemId) {
+        Book book = modelMapper.map(bookForm, Book.class);
+        itemService.saveItem(book);
+        return "redirect:/items";
     }
 }
 
