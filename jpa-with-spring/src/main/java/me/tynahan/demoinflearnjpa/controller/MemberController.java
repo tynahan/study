@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +34,8 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@Valid MemberForm memberForm, BindingResult result) {
+    public String create(@RequestBody @Valid MemberForm memberForm, BindingResult result) {
+        log.info("memberForm.toString() = " + memberForm.toString());
 
         if (result.hasErrors()) {
             return "members/createMemberForm";
