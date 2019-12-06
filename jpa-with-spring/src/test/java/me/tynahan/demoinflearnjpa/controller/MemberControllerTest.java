@@ -1,5 +1,6 @@
 package me.tynahan.demoinflearnjpa.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.tynahan.demoinflearnjpa.domain.Member;
 import me.tynahan.demoinflearnjpa.service.MemberService;
@@ -13,6 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -60,16 +65,20 @@ public class MemberControllerTest {
         memberForm.setStreet("sungbuk");
         memberForm.setZipcode("21730");
 
+        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+        Map<String, String> map = objectMapper.convertValue(memberForm, new TypeReference<Map<String, String>>() {});
+        multiValueMap.setAll(map);
+
         when(modelMapper.map(any(), any())).thenReturn(new Member());
 
         ResultActions result = mockMvc.perform(post("/members/new")
-                .content(objectMapper.writeValueAsString(memberForm))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .params(multiValueMap)
+        );
 
         // Then
         result.andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"))
+                .andExpect(redirectedUrl("/"))
                 .andDo(print());
     }
 
@@ -86,12 +95,16 @@ public class MemberControllerTest {
         memberForm.setStreet("sungbuk");
         memberForm.setZipcode("21730");
 
+        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+        Map<String, String> map = objectMapper.convertValue(memberForm, new TypeReference<Map<String, String>>() {});
+        multiValueMap.setAll(map);
+
         when(modelMapper.map(any(), any())).thenReturn(new Member());
 
         ResultActions result = mockMvc.perform(post("/members/new")
-                .content(objectMapper.writeValueAsString(memberForm))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .params(multiValueMap)
+        );
 
         // Then
         result.andExpect(status().isOk())

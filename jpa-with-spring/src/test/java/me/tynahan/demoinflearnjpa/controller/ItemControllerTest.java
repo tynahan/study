@@ -1,11 +1,8 @@
 package me.tynahan.demoinflearnjpa.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.tynahan.demoinflearnjpa.domain.Member;
-import me.tynahan.demoinflearnjpa.domain.item.Book;
-import me.tynahan.demoinflearnjpa.domain.item.Item;
 import me.tynahan.demoinflearnjpa.service.ItemService;
-import me.tynahan.demoinflearnjpa.service.MemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
@@ -16,12 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import java.util.Map;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,13 +58,18 @@ public class ItemControllerTest {
         bookForm.setPrice(100000);
         bookForm.setStockQuantity(100);
 
+        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+        Map<String, String> map = objectMapper.convertValue(bookForm, new TypeReference<Map<String, String>>() {});
+        multiValueMap.setAll(map);
+
         ResultActions result = mockMvc.perform(post("/items/new")
-                .content(objectMapper.writeValueAsString(bookForm))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .params(multiValueMap)
+        );
 
         // Then
         result.andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"))
+                .andExpect(redirectedUrl("/"))
                 .andDo(print());
     }
 }

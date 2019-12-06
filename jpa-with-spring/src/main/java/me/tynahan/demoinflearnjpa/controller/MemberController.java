@@ -34,9 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@RequestBody @Valid MemberForm memberForm, BindingResult result) {
-        log.info("memberForm.toString() = " + memberForm.toString());
-
+    public String create(@Valid MemberForm memberForm, BindingResult result) {
         if (result.hasErrors()) {
             return "members/createMemberForm";
         }
