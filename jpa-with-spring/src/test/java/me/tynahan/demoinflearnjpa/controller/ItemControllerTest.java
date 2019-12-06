@@ -72,4 +72,18 @@ public class ItemControllerTest {
                 .andExpect(redirectedUrl("/"))
                 .andDo(print());
     }
+
+    @Test
+    public void testGetItemList() throws Exception {
+        // Given
+        // When
+        ResultActions resultActions = mockMvc.perform(get("/items"));
+
+        // Then
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("items/itemList"))
+                .andExpect(model().attributeExists("items"));
+    }
+
 }
