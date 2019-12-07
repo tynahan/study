@@ -3,6 +3,8 @@ package me.tynahan.demoinflearnjpa.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.tynahan.demoinflearnjpa.domain.Member;
+import me.tynahan.demoinflearnjpa.domain.Order;
+import me.tynahan.demoinflearnjpa.domain.OrderSearch;
 import me.tynahan.demoinflearnjpa.domain.item.Item;
 import me.tynahan.demoinflearnjpa.service.ItemService;
 import me.tynahan.demoinflearnjpa.service.MemberService;
@@ -10,6 +12,7 @@ import me.tynahan.demoinflearnjpa.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,7 +41,14 @@ public class OrderController {
     public String create(@RequestParam("memberId") Long memberId,
                          @RequestParam("itemId") Long itemId,
                          @RequestParam("count") int count) {
-        Long order = orderService.order(memberId, itemId, count);
+        orderService.order(memberId, itemId, count);
         return "redirect:/orders";
+    }
+
+    @GetMapping("/orders")
+    public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+        List<Order> orders = orderService.findAllOrders(orderSearch);
+        model.addAttribute("orders", orders);
+        return "order/orderList";
     }
 }
